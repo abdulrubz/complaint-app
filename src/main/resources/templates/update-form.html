@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.8.2/css/bulma.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../static/css/forms.css"
+      th:href="@{/css/forms.css}"
+    />
+    <meta charset="UTF-8" />
+    <title>Resolve a Complaint</title>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav
+      class="navbar has-shadow is-fixed-top"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div class="navbar-brand">
+        <a class="navbar-item" th:href="@{/}">
+          <h1 class="title is-5">Complaint Tracker App</h1>
+        </a>
+
+        <a
+          role="button"
+          class="navbar-burger burger"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="navbarBasicExample"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item">
+            Home
+          </a>
+
+          <a th:href="@{/complaints/list}" class="navbar-item">
+            View Complaints
+          </a>
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <form th:action="@{/logout}" method="POST">
+              <button class="button is-info is-light" type="submit">
+                Logout
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero is-small is-link">
+      <div class="hero-body">
+        <!-- <div class="container"> -->
+        <h1 class="title">
+          Resolve Complaint
+        </h1>
+        <h2 class="subtitle">
+          Use the form below the resolve the complaint.
+        </h2>
+        <!-- </div> -->
+      </div>
+    </section>
+
+    <section class="form-section">
+      <div class="form-div view-form">
+        <form
+          action="#"
+          th:action="@{/complaints/processFormAfterUpdate}"
+          th:object="${complaint}"
+          method="post"
+        >
+          <input type="hidden" th:field="*{id}" />
+          <input type="hidden" th:field="*{title}" /> <br />
+
+          <div class="complaint-field">
+            <h4 class="title is-5">User</h4>
+            <p class="subtitle is-6" th:text="${complaint.username}"></p>
+          </div>
+
+          <div class="complaint-field">
+            <h4 class="title is-5">Title</h4>
+            <p class="subtitle is-6" th:text="${complaint.title}"></p>
+          </div>
+
+           <textarea th:hidden="hidden" rows="1" cols="1" class="textarea-hidden" th:field="*{body}"></textarea>
+
+          <div class="complaint-field">
+            <h4 class="title is-5">Body</h4>
+            <p class="subtitle is-6" th:text="${complaint.body}"></p>
+          </div>
+
+          <div class="select">
+            <select th:field="*{status}">
+              <option th:value="'Unresolved'" th:text="Unresolved"></option>
+              <option th:value="'Forwarded'" th:text="Forwarded"></option>
+              <option th:value="'Resolved'" th:text="Resolved"></option>
+            </select>
+          </div>
+
+          <input type="hidden" th:field="*{username}" />
+          <div class="button-div">
+            <div class="button-footer">
+              <button class="button is-primary submit-btn" type="submit">
+                Save
+              </button>
+              <a
+                th:href="@{/complaints/list}"
+                class="button is-link is-light"
+                style="margin-top: 15px;"
+                >Back to Complaints</a
+              >
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </body>
+</html>

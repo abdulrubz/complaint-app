@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login Form</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.8.2/css/bulma.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../static/css/forms.css"
+      th:href="@{/css/forms.css}"
+    />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav
+      class="navbar has-shadow is-fixed-top"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div class="navbar-brand">
+        <a class="navbar-item" th:href="@{/}">
+          <h1 class="title is-5">Complaint Tracker App</h1>
+        </a>
+
+        <a
+          role="button"
+          class="navbar-burger burger"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="navbarBasicExample"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item">
+            Home
+          </a>
+
+          <a th:href="@{/complaints/list}" class="navbar-item">
+            View Complaints
+          </a>
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item"></div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero is-small is-link">
+      <div class="hero-body">
+        <!-- <div class="container"> -->
+        <h1 class="title">
+          Login
+        </h1>
+        <h2 class="subtitle">
+          Provide your username and password to login to the app.
+        </h2>
+        <!-- </div> -->
+      </div>
+    </section>
+
+    <section class="form-section">
+      <div class="form-div">
+        <form th:action="@{/authenticateTheUser}" method="post">
+          <div th:if="${param.error}">
+            <div class="notification is-danger invalid">
+              Invalid username or password.
+            </div>
+          </div>
+          <div th:if="${param.logout}">
+            <div class="notification is-warning lout">
+              You have been logged out.
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Username</label>
+            <div class="control">
+              <input
+                class="input"
+                name="username"
+                type="text"
+                placeholder="Enter your username"
+              />
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Password</label>
+            <div class="control">
+              <input
+                class="input"
+                name="password"
+                type="password"
+                placeholder="Enter your password"
+              />
+            </div>
+          </div>
+          <div class="field">
+            <p class="control">
+              <button type="submit" class="button is-success">
+                Login
+              </button>
+            </p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </body>
+</html>

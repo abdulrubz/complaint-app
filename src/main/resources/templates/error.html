@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.8.2/css/bulma.min.css"
+    />
+    <link
+            rel="stylesheet"
+            type="text/css"
+            href="../static/css/forms.css"
+            th:href="@{/css/forms.css}"
+    />
+    <meta charset="UTF-8" />
+    <title>Page Not Found</title>
+</head>
+<body>
+<!-- Navbar -->
+<nav
+        class="navbar has-shadow is-fixed-top"
+        role="navigation"
+        aria-label="main navigation"
+>
+    <div class="navbar-brand">
+        <a class="navbar-item" th:href="@{/}">
+            <h1 class="title is-5">Complaint Tracker App</h1>
+        </a>
+
+        <a
+                role="button"
+                class="navbar-burger burger"
+                aria-label="menu"
+                aria-expanded="false"
+                data-target="navbarBasicExample"
+        >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item">
+                Home
+            </a>
+
+            <a th:href="@{/complaints/list}" class="navbar-item">
+                View Complaints
+            </a>
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <form th:action="@{/logout}" method="POST">
+                    <button class="button is-info is-light" type="submit">
+                        Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section class="section-404">
+    <div class="columns">
+        <div class="column is-two-fifths">
+            <div class="error-text-div">
+                <p class="title is-2">
+                    Oops!
+                </p>
+                <p class="subtitle">
+                    Something went wrong. We could not find the page you were looking
+                    for.
+                </p>
+                <div class="buttons">
+                    <a
+                            th:href="@{/complaints/list}"
+                            class="button is-link is-light"
+                            style="margin-top: 15px;"
+                    >Back to Complaints</a
+                    >
+                    <a
+                            th:href="@{/}"
+                            class="button is-info is-light"
+                            style="margin-top: 15px;"
+                    >Home</a
+                    >
+                </div>
+            </div>
+        </div>
+        <div class="column is-three-fifths">
+            <img src="/img/404-robot.png" alt="404 Error" />
+        </div>
+    </div>
+</section>
+</body>
+</html>

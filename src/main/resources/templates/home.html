@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.8.2/css/bulma.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css" th:href="@{/css/style.css}"/>
+    <title>Complaint Tracker App</title>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar has-shadow is-fixed-top" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" th:href="@{/}">
+          <h1 class="title is-5">Complaint Tracker App</h1>
+        </a>
+
+        <a
+          role="button"
+          class="navbar-burger burger"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="navbarBasicExample"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item">
+            Home
+          </a>
+
+          <a th:href="@{/complaints/list}" class="navbar-item">
+            View Complaints
+          </a>
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <form th:action="@{/logout}" method="POST" >
+              <button class="button is-info is-light" type="submit" >Logout</button>
+          </form>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero is-link is-fullheight">
+        <div class="hero-body">
+          <div class="container">
+
+            <div class="columns">
+              <div class="column is-half">
+                  <div class="hero-text">
+                    <h1 class="title hero-head">Welcome, <span sec:authentication="name" style="display: inline;" ></span>!</h1>
+
+                    <div sec:authorize="hasRole('MANAGER')">
+                      <p class="subtitle hero-p">
+                        You are a manager for this app and you will be able to view complaints made by other users and resolve them.
+                      </p>
+                    </div>
+                    <div sec:authorize="hasRole('USER')">
+                      <p class="subtitle hero-p">
+                        You are a user and you will be able to register your complaints in this app. Feel free to check in later to check the complaint status.
+                      </p>
+                    </div>
+
+                    <a th:href="@{/complaints/list}" class="button is-info">View Complaints</a>
+                  </div>
+
+              </div>
+              <div class="column is-half">
+                  <img src="/img/hero-vector.png" alt="Complaint Tracker App" >
+              </div>
+            </div>
+
+            <!-- <h1> Welcome 
+                <span sec:authentication="name" style="display: inline;" ></span>
+            </h1>
+            <form th:action="@{/logout}" method="POST" >
+              <input  type="submit" value="Logout" />
+            </form> -->
+          </div>
+        </div>
+      </section>
+
+
+
+      <footer class="footer" id="lol-footer">
+        <div class="content has-text-centered">
+          <p>
+             Made by <strong>Abdul Rub Rayyan</strong>
+          </p>
+        </div>
+      </footer>
+  </body>
+</html>

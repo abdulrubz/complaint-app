@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns="http://www.w3.org/1999/html"
+  lang="en"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Add Complaints</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.8.2/css/bulma.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../static/css/cards.css"
+      th:href="@{/css/cards.css}"
+    />
+    <title>List Complaints</title>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav
+      class="navbar has-shadow is-fixed-top"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div class="navbar-brand">
+        <a class="navbar-item" th:href="@{/}">
+          <h1 class="title is-5">Complaint Tracker App</h1>
+        </a>
+
+        <a
+          role="button"
+          class="navbar-burger burger"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="navbarBasicExample"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item">
+            Home
+          </a>
+
+          <a
+            sec:authorize="hasRole('USER')"
+            class="navbar-item"
+            th:href="@{/complaints/showAddForm}"
+            >Add Complaint</a
+          >
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <form th:action="@{/logout}" method="POST">
+              <button class="button is-info is-light" type="submit">
+                Logout
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero  -->
+
+    <!-- Hero -->
+    <section class="hero is-small is-link">
+      <div class="hero-body">
+        <!-- <div class="container"> -->
+        <h1 class="title">
+          Complaints Dashboard
+        </h1>
+
+        <h2 class="subtitle" sec:authorize="hasRole('USER')">
+          Use the below dashboard to add, delete and check the status of your
+          complaints.
+        </h2>
+        <h2 class="subtitle" sec:authorize="hasRole('MANAGER')">
+          Use the below dashboard to view and resolve complaints as a manager.
+        </h2>
+
+        <!-- </div> -->
+      </div>
+    </section>
+
+    <!-- <div sec:authorize="hasRole('USER')">
+      <p>
+        <a th:href="@{/complaints/showAddForm}">Add Complaint</a>
+      </p>
+    </div> -->
+
+    <section class="cards-section">
+      <div class="container">
+        <div class="card" th:each="tempComplaint : ${complaints}">
+          <header class="card-header">
+            <p class="card-header-title" th:text="${tempComplaint.title}"></p>
+          </header>
+          <div class="content">
+            <p th:text="${tempComplaint.body}"></p>
+            <strong>Status: </strong>
+            <p th:text="${tempComplaint.status}"></p>
+          </div>
+          <div  th:class="${tempComplaint.status}"></div>
+          <div class="card-footer">
+            <div sec:authorize="hasRole('MANAGER')">
+              <a
+                th:href="@{/complaints/showUpdateForm(id=${tempComplaint.id})}"
+                class="card-footer-item"
+                >RESOLVE</a
+              >
+            </div>
+            <div sec:authorize="hasRole('USER')">
+              <a
+                class="card-footer-item"
+                th:href="@{/complaints/delete(id=${tempComplaint.id})}"
+                onclick="if(!(confirm('Are you sure you want to delete this complaint?'))) return false"
+                >DELETE</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- <div>
+      <div th:each="tempComplaint : ${complaints}">
+        <p th:text="${tempComplaint.title}"></p>
+        <p th:text="${tempComplaint.body}"></p>
+        <p th:text="${tempComplaint.status}"></p>
+
+        <div sec:authorize="hasRole('MANAGER')">
+          <p>
+            <a th:href="@{/complaints/showUpdateForm(id=${tempComplaint.id})}"
+              >RESOLVE</a
+            >
+          </p>
+        </div>
+
+        <div sec:authorize="hasRole('USER')">
+          <p>
+            <a
+              th:href="@{/complaints/delete(id=${tempComplaint.id})}"
+              onclick="if(!(confirm('Are you sure you want to delete this complaint?'))) return false"
+              >DELETE</a
+            >
+          </p>
+        </div>
+      </div>
+    </div> -->
+    <!-- <form th:action="@{/logout}" method="POST">
+      <input type="submit" value="Logout" />
+    </form> -->
+  </body>
+</html>
